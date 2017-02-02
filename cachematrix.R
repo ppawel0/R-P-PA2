@@ -1,15 +1,49 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Pawe³ Piwowarski 02.02.2017
+## Functions create environment to caching inversed matrix
 
-## Write a short comment describing this function
+## Function makeCacheMatrix
+## define function set, get, setSolve, getSolve
+## arguments: x, default matrix
+## return list of definition of function set, get, setSolve, getSolve de 
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  set <- function(y) {
+    x <<- y
+    m <<- NULL
+  }
+  get <- function() x
+  setSolve <- function(solve) m <<- solve
+  getSolve <- function() m
+  list(set = set, get = get,
+       setSolve = setSolve,
+       getSolve = getSolve)
 }
 
 
-## Write a short comment describing this function
+## Funtcion cacheSolve inverse matrix
+## Arguments: x - square matrix (matrix has to be invertible)
+## Nested f function checking reversibility of matrix, in negative case return NaN
+## Return inverted matrix
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        
+  m <- x$getSolve()
+  if(!is.null(m)) {
+    message("getting cached data")
+    return(m)
+  }
+  data <- x$get()
+  #f function
+  f <- function(mx) class(try(solve(mx),silent=T))=="matrix"
+  #check matrix
+  if(f(data))
+  {
+    m <- solve(data, ...)
+    x$setSolve(m)
+    return(m)
+  }
+  else
+    return (NaN)
+  
 }
