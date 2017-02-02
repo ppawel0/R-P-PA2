@@ -1,4 +1,4 @@
-## Pawe³ Piwowarski 02.02.2017
+## Pawel Piwowarski 02.02.2017
 ## Functions create environment to caching inversed matrix
 
 ## Function makeCacheMatrix
